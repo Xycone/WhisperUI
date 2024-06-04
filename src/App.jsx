@@ -10,7 +10,7 @@ import Topbar from './components/Topbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 
 // Pages
-import TranscribeAPI from './pages/APIs.jsx';
+import TranscribeFiles from './pages/TranscribeFiles.jsx';
 
 function App() {
   const [theme, colourMode] = useMode();
@@ -24,7 +24,7 @@ function App() {
           <main className="content">
             <Topbar />
             <Routes>
-              <Route path="/APIs" element={<TranscribeAPI />} />
+              <Route path="/transcribefiles" element={<TranscribeFiles />} />
             </Routes>
           </main>
         </div>

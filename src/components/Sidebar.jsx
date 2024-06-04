@@ -8,6 +8,8 @@ import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { tokens } from '../themes/MyTheme';
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
+import RadioButtonCheckedOutlinedIcon from '@mui/icons-material/RadioButtonCheckedOutlined';
 import DataObjectOutlinedIcon from '@mui/icons-material/DataObjectOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
@@ -85,24 +87,61 @@ function Sidebar() {
 
                     {/* Menu Items */}
                     <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+                        <Typography
+                            variant="h6"
+                            color={colours.grey[300]}
+                            sx={{ p: "25px 0 5px 20px" }}
+                        >
+                            Main
+                        </Typography>
                         <Item
-                            title="Dashboard"
+                            title="Home"
                             to="/Dashboard"
                             icon={<HomeOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
+
+                        <Typography
+                            variant="h6"
+                            color={colours.grey[300]}
+                            sx={{ p: "25px 0 5px 20px" }}
+                        >
+                            APIs
+                        </Typography>
                         <Item
-                            title="APIs"
-                            to="/APIs"
-                            icon={<DataObjectOutlinedIcon />}
+                            title="Transcribe Files"
+                            to="/transcribefiles"
+                            icon={<AudioFileOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Documentation"
-                            to="/Documentation"
+                            title="Live Transcribe"
+                            to="/livetranscribe"
+                            icon={<RadioButtonCheckedOutlinedIcon />}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
+
+                        <Typography
+                            variant="h6"
+                            color={colours.grey[300]}
+                            sx={{ p: "25px 0 5px 20px" }}
+                        >
+                            Docs
+                        </Typography>
+                        <Item
+                            title="Setup Documentation"
+                            to="/Setup"
                             icon={<DescriptionOutlinedIcon />}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
+                        <Item
+                            title="API Documentation"
+                            to="/"
+                            icon={<DataObjectOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
                         />
