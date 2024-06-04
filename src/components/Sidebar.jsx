@@ -38,9 +38,6 @@ function Sidebar() {
     return (
         <Box
             sx={{
-                height: '100vh',
-                position: 'sticky',
-                
                 "& .pro-sidebar-inner": {
                     background: `${colours.primary[400]} !important`
                 },

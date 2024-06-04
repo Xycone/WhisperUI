@@ -9,7 +9,11 @@ body,
 
 .app {
   display: flex;
-  position: relative;
+  overflow-y: hidden
+}
+
+.content {
+  overflow-y: auto;
 }
 
 ::-webkit-scrollbar {

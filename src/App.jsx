@@ -20,9 +20,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Box>
-            <Sidebar />
-          </Box>
+          <Sidebar />
           <main className="content">
             <Topbar />
             <Routes>
