@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
 // MUI Theme
-import { Box } from '@mui/material';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColourModeContext, useMode } from './themes/MyTheme.js';
 

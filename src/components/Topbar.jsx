@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 
 import { Box, IconButton, useTheme } from '@mui/material';
 import { ColourModeContext, tokens } from '../themes/MyTheme';
 import InputBase from '@mui/material/InputBase';
 
+// MUI Icons
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';

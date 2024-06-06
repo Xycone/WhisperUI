@@ -7,6 +7,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { tokens } from '../themes/MyTheme';
 
+// MUI Icons
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
 import RadioButtonCheckedOutlinedIcon from '@mui/icons-material/RadioButtonCheckedOutlined';

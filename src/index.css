@@ -9,11 +9,12 @@ body,
 
 .app {
   display: flex;
-  overflow-y: hidden
+  overflow-y: hidden;
 }
 
 .content {
   overflow-y: auto;
+  min-width: fit-content;
 }
 
 ::-webkit-scrollbar {
