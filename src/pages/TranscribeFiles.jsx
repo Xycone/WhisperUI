@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 
-import { Box, Typography, Grid, Divider, List, ListItem, ListItemText } from '@mui/material'
+import { Box, Typography, Grid, Divider, Button, useTheme } from '@mui/material'
+import { tokens } from '../themes/MyTheme';
 
 // MUI Icons
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 // React Components
 import Header from '../components/Header'
 
 function TranscribeFiles() {
+    const theme = useTheme();
+    const colours = tokens(theme.palette.mode);
+
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const handleDragover = (event) => {
@@ -26,10 +31,12 @@ function TranscribeFiles() {
         setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
     };
 
-
+    const handleFileRemove = (index) => {
+        setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    };
 
     return (
-        <Box p={5}>
+        <Box p={3}>
             <Box
                 display="flex"
                 flexDirection="column"
@@ -51,7 +58,9 @@ function TranscribeFiles() {
                             <Typography>mp3, mp4, mpeg, mpga, m4a, wav, webm</Typography>
                         </Grid>
                     </Grid>
+
                     <Divider />
+
                     <Grid container my={3}>
                         <Grid item xs={12} md={4} lg={2.5}>
                             <Typography>File Size Limit (MB):</Typography>
@@ -60,57 +69,74 @@ function TranscribeFiles() {
                             <Typography>25</Typography>
                         </Grid>
                     </Grid>
+
                     <Divider />
+
                     <Grid container my={3}>
                         <Grid item xs={12} md={4} lg={2.5} mb={3}>
                             <Typography>Selected Files:</Typography>
                         </Grid>
                         <Grid item xs={12} md={8} lg={9.5}>
-                            <Grid container spacing={{ xs: 3, lg: 10 }}>
-                                <Grid item xs={12} lg={6}>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12}>
                                     <Box
                                         onDragOver={handleDragover}
                                         onDrop={handleDrop}
                                         border="2px dashed"
-                                        py={5}
+                                        py={3}
                                         textAlign="center"
                                         borderRadius="10px"
                                     >
                                         <DriveFolderUploadOutlinedIcon />
-                                        <Typography>Drag and drop files here</Typography>
-                                        <Typography> - OR -</Typography>
-                                        <input
-                                            type="file"
-                                            multiple
-                                            onChange={handleFileSelect}
-                                            style={{ display: 'none' }}
-                                            id="fileInput"
-                                        />
-                                        <label htmlFor="fileInput" style={{ cursor: 'pointer' }}>
-                                            <Typography color="primary">Click to select files</Typography>
-                                        </label>
+                                        <Typography my={1}>Drag and drop files here</Typography>
+                                        <Typography my={1}> - OR -</Typography>
+                                        <Button
+                                            my={1}
+                                            variant="contained"
+                                            component="label"
+                                        >
+                                            <Typography>
+                                                Choose File(s)
+                                            </Typography>
+                                            <input
+                                                type="file"
+                                                multiple
+                                                onChange={handleFileSelect}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </Button>
                                     </Box>
                                 </Grid>
 
-                                <Grid item xs={12} lg={6}>
-                                    <Box>
-                                        {selectedFiles.length > 0 && (
-                                            selectedFiles.map((file, index) => (
-                                                <Typography key={index}>
+                                {selectedFiles.length > 0 && (
+                                    selectedFiles.map((file, index) => (
+                                        <Grid item xs={12} md={6} lg={4}>
+                                            <Box
+                                                py={1.5}
+                                                display="flex"
+                                                justifyContent="center"
+                                                border="2px solid"
+                                                borderRadius="10px"
+                                            >
+                                                <Typography mr={1} key={index}>
                                                     {file.name}
                                                 </Typography>
-                                            ))
-                                        )}
-                                    </Box>
-                                </Grid>
+                                                <ClearOutlinedIcon />
+                                            </Box>
+                                        </Grid>
+                                    ))
+                                )}
                             </Grid>
                         </Grid>
                     </Grid>
+
                     <Divider />
+
                     <Grid container my={3}>
                         <Grid item xs={12} md={4} lg={2.5}>
                             <Typography>Speaker Diarisation:</Typography>
                         </Grid>
+
                         <Grid item xs={12} md={8} lg={9.5}>
                         </Grid>
                     </Grid>
