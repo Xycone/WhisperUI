@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -33,10 +33,17 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 }
 
 function Sidebar() {
+    const location = useLocation();
+    const { pathname } = location;
+    const selected = 
+    pathname === '/transcribefiles' ? 'Transcribe Files' : 
+    pathname === '/livetranscribe' ? 'Live Transcribe' : 
+    pathname === '/setupdocs' ? 'Setup Documentation' : 
+    pathname === '/apidocs' ? 'API Documentation' : 'Home';
+
     const theme = useTheme();
     const colours = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const [selected, setSelected] = useState("pages")
 
     return (
         <Box
@@ -100,7 +107,6 @@ function Sidebar() {
                             to="/Dashboard"
                             icon={<HomeOutlinedIcon />}
                             selected={selected}
-                            setSelected={setSelected}
                         />
 
                         <Typography
@@ -115,14 +121,12 @@ function Sidebar() {
                             to="/transcribefiles"
                             icon={<AudioFileOutlinedIcon />}
                             selected={selected}
-                            setSelected={setSelected}
                         />
                         <Item
                             title="Live Transcribe"
                             to="/livetranscribe"
                             icon={<RadioButtonCheckedOutlinedIcon />}
                             selected={selected}
-                            setSelected={setSelected}
                         />
 
                         <Typography
@@ -134,17 +138,15 @@ function Sidebar() {
                         </Typography>
                         <Item
                             title="Setup Documentation"
-                            to="/Setup"
+                            to="/setupdocs"
                             icon={<DescriptionOutlinedIcon />}
                             selected={selected}
-                            setSelected={setSelected}
                         />
                         <Item
                             title="API Documentation"
-                            to="/"
+                            to="/apidocs"
                             icon={<DataObjectOutlinedIcon />}
                             selected={selected}
-                            setSelected={setSelected}
                         />
                     </Box>
                 </Menu>

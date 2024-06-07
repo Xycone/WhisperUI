@@ -10,6 +10,9 @@ import Sidebar from './components/Sidebar.jsx';
 
 // Pages
 import TranscribeFiles from './pages/TranscribeFiles.jsx';
+import LiveTranscribe from './pages/LiveTranscribe.jsx';
+import SetupDocs from './pages/SetupDocs.jsx';
+import ApiDocs from './pages/ApiDocs.jsx';
 
 function App() {
   const [theme, colourMode] = useMode();
@@ -24,6 +27,9 @@ function App() {
             <Topbar />
             <Routes>
               <Route path="/transcribefiles" element={<TranscribeFiles />} />
+              <Route path="/livetranscribe" element={<LiveTranscribe />} />
+              <Route path="/setupdocs" element={<SetupDocs />} />
+              <Route path="/apidocs" element={<ApiDocs />} />
             </Routes>
           </main>
         </div>

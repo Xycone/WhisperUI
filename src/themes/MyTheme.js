@@ -160,6 +160,80 @@ export const themeSettings = (mode) => {
                 }
             )
         },
+        components: {
+            MuiOutlinedInput: {
+                styleOverrides: {
+                    root: {
+                        borderRadius: 8,
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                            borderColor: colours.greenAccent[300],
+                        },
+                        "&.Mui-focused": {
+                            "& .MuiOutlinedInput-notchedOutline": {
+                                borderColor: colours.greenAccent[300]
+                            }
+                        },
+                        "& .MuiInputLabel-outlined": {
+                            "&.Mui-focused": {
+                                color: colours.greenAccent[300]
+                            }
+                        }
+                    }
+                }
+            },
+            MuiSelect: {
+                styleOverrides: {
+                    root: {
+                        borderRadius: 8,
+                    }
+                }
+            },
+            MuiMenu: {
+                styleOverrides: {
+                    list: {
+                        backgroundColor: colours.primary[400]
+                    }
+                }
+            },
+            MuiCheckbox: {
+                styleOverrides: {
+                    root: {
+                        borderRadius: 8,
+                        '&.Mui-checked': {
+                            color: colours.greenAccent[300],
+                        },
+                        '&:hover': {
+                            backgroundColor: colours.primary[400],
+                        },
+                    }
+                }
+            },
+            MuiButton: {
+                styleOverrides: {
+                    root: {
+                        borderRadius: 8,
+                        textTransform: "none",
+                        ...(mode === "dark"
+                            ? {
+                                backgroundColor: colours.greenAccent[300],
+                                color: colours.primary[500],
+                                "&:hover": {
+                                    backgroundColor: colours.greenAccent[200],
+                                    color: colours.primary[500]
+                                }
+                            } : {
+                                backgroundColor: colours.greenAccent[300],
+                                color: "#FCFCFC",
+                                "&:hover": {
+                                    backgroundColor: colours.greenAccent[200],
+                                    color: "#FCFCFC"
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+        },
         typography: {
             fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
             fontSize: 12,
@@ -202,7 +276,7 @@ export const useMode = () => {
         () => ({
             toggleColourMode: () =>
                 setMode((prev) => (prev === "light" ? "dark" : "light")),
-        }), 
+        }),
         []
     );
 

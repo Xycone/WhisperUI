@@ -19,7 +19,7 @@ function Topbar() {
         <Box
             display="flex"
             justifyContent="space-between"
-            p={4}
+            p={5}
         >
             {/* Search Bar */}
             <Box
