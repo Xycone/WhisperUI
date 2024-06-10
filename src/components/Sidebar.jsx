@@ -15,7 +15,7 @@ import DataObjectOutlinedIcon from '@mui/icons-material/DataObjectOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, to, icon, selected }) => {
     const theme = useTheme();
     const colours = tokens(theme.palette.mode);
 
@@ -23,7 +23,6 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         <MenuItem
             active={selected === title}
             style={{ color: colours.grey[100] }}
-            onClick={() => setSelected(title)}
             icon={icon}
         >
             <Typography>{title}</Typography>
@@ -35,11 +34,11 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 function Sidebar() {
     const location = useLocation();
     const { pathname } = location;
-    const selected = 
-    pathname === '/transcribefiles' ? 'Transcribe Files' : 
-    pathname === '/livetranscribe' ? 'Live Transcribe' : 
-    pathname === '/setupdocs' ? 'Setup Documentation' : 
-    pathname === '/apidocs' ? 'API Documentation' : 'Home';
+    const selected =
+        pathname === '/transcribefiles' ? 'Transcribe Files' :
+            pathname === '/livetranscribe' ? 'Live Transcribe' :
+                pathname === '/setupdocs' ? 'Setup Documentation' :
+                    pathname === '/apidocs' ? 'API Documentation' : 'Home';
 
     const theme = useTheme();
     const colours = tokens(theme.palette.mode);

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 
-import { Box, Typography, Grid, Divider, Button, useTheme, TextField, Select, Checkbox, MenuItem } from '@mui/material'
+import { Box, Typography, Grid, Divider, Button, useTheme, TextField, Select, Checkbox, MenuItem, FormControl } from '@mui/material'
 import { tokens } from '../themes/MyTheme';
 
 // MUI Icons
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+
+// Form & Form Validation
+import * as yup from 'yup';
+import { useFormik } from 'formik';
 
 // React Components
 import Header from '../components/Header';
@@ -13,18 +17,6 @@ import Header from '../components/Header';
 function TranscribeFiles() {
     const theme = useTheme();
     const colours = tokens(theme.palette.mode);
-
-    // Diarisation Checkbox
-    const [checked, setChecked] = useState(false);
-    const handleChangeCheckbox = (event) => {
-        setChecked(event.target.checked);
-    };
-
-    // Model Selection
-    const [selectedModel, setSelectedModel] = useState("base");
-    const handleModelSelect = (event) => {
-        setSelectedModel(event.target.value);
-    };
 
     // File Selection
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -38,6 +30,40 @@ function TranscribeFiles() {
     const handleFileRemove = (index) => {
         setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
+
+    const formik = useFormik({
+        // Default Form Values
+        initialValues: {
+            model_size: "base",
+            diarisation: false,
+            num_speakers: 1
+        },
+
+        // Validation Schema
+        validationSchema: yup.object({
+            model_size: yup.string()
+                .oneOf(["tiny", "base", "small", "medium", "large"])
+                .required(),
+
+            diarisation: yup.bool()
+                .required(),
+
+            num_speakers: yup.number()
+                .min(1, 'Must be at least 1')
+                .max(10, 'Must be 10 or less')
+        }),
+
+        onSubmit: (data) => {
+            data.model_size = data.model_size.trim();
+
+            if (!data.diarisation) {
+                data.num_speakers = 1
+            };
+
+            // POST Request
+            console.log("Form submitted:", data);
+        }
+    });
 
     return (
         <Box p={5}>
@@ -104,31 +130,6 @@ function TranscribeFiles() {
                                     />
                                 </Button>
                             </Box>
-
-                            {/* <Box
-                                    display="grid"
-                                    gridTemplateColumns={{ xs: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }}
-                                    gridAutoRows="1fr"
-                                    gridAutoFlow="row"
-                                    gap={2}
-                                >
-                                    {selectedFiles.length > 0 && (
-                                        selectedFiles.map((file, index) => (
-                                            <Box
-                                                py={1.5}
-                                                display="flex"
-                                                justifyContent="center"
-                                                border="2px solid"
-                                                borderRadius="10px"
-                                            >
-                                                <Typography mr={1} key={index}>
-                                                    {file.name}
-                                                </Typography>
-                                                <ClearOutlinedIcon />
-                                            </Box>
-                                        ))
-                                    )}
-                                </Box> */}
                         </Grid>
                     </Grid>
 
@@ -154,9 +155,12 @@ function TranscribeFiles() {
                             >
                                 <Select
                                     autoWidth
-                                    value={selectedModel}
                                     size="small"
-                                    onChange={handleModelSelect}
+                                    name="model_size"
+                                    value={formik.values.model_size}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    error={formik.touched.model_size && Boolean(formik.errors.model_size)}
                                 >
                                     <MenuItem value={"tiny"}>Tiny</MenuItem>
                                     <MenuItem value={"base"}>Base</MenuItem>
@@ -182,13 +186,18 @@ function TranscribeFiles() {
                         </Grid>
 
                         <Grid item xs={12} md={8} lg={9.5}>
-                            <Checkbox
-                                checked={checked}
-                                onChange={handleChangeCheckbox}
-                            />
+                            <FormControl error={formik.touched.diarisation && Boolean(formik.errors.diarisation)}>
+                                <Checkbox
+                                    name="diarisation"
+                                    value={formik.values.diarisation}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                />
+                            </FormControl>
                         </Grid>
                     </Grid>
-                    {checked && (
+                    
+                    {formik.values.diarisation && (
                         <Grid container my={3}>
                             <Grid item xs={12} md={4} lg={2.5}>
                                 <Box
@@ -210,8 +219,13 @@ function TranscribeFiles() {
                                     <TextField
                                         type="number"
                                         size="small"
-                                        disabled={!checked}
-                                        InputProps={{ inputProps: { min: 0, max: 10 } }}
+                                        disabled={!formik.values.diarisation}
+                                        InputProps={{ inputProps: { min: 1, max: 10 } }}
+                                        name="num_speakers"
+                                        value={formik.values.num_speakers}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.num_speakers && Boolean(formik.errors.num_speakers)}
                                     />
                                 </Box>
                             </Grid>
@@ -227,8 +241,10 @@ function TranscribeFiles() {
                     >
                         <Button
                             variant="contained"
+                            type="submit"
                             component="label"
                             size="large"
+                            onClick={formik.handleSubmit}
                         >
                             <Typography>Submit</Typography>
                         </Button>
