@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
-import { Box, Typography, Grid, Divider, Button, useTheme, TextField, Select, Checkbox, MenuItem, FormControl } from '@mui/material'
+import { Box, Typography, Grid, Divider, Button, TextField, Select, Checkbox, MenuItem, FormControl, useTheme } from '@mui/material'
 import { tokens } from '../themes/MyTheme';
+
+// Used for backend API call
+import http from '../http';
 
 // MUI Icons
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
@@ -31,6 +34,7 @@ function TranscribeFiles() {
         setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
 
+    // Form
     const formik = useFormik({
         // Default Form Values
         initialValues: {
@@ -60,8 +64,12 @@ function TranscribeFiles() {
                 data.num_speakers = 1
             };
 
+            console.log(data)
             // POST Request
-            console.log("Form submitted:", data);
+            // console.log("Form submitted:", data);
+            // http.post("/transcribe-files", data, selectedFiles).then((res) => {
+            //     console.log("API response:", res);
+            // })
         }
     });
 
