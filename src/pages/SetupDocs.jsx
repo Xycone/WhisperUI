@@ -31,7 +31,7 @@ function SetupDocs() {
                 <Typography variant="h5">Operating System:</Typography>
                 <Typography>Windows 11 (21H2 or higher)</Typography>
               </Box>
-              <Box mb={3}>
+              <Box>
                 <Typography variant="h5">Prerequisites:</Typography>
                 <Typography>Enable hardware virtualisation inside BIOS</Typography>
               </Box>
@@ -48,7 +48,7 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={2}>
+              <Box>
                 <Typography>
                   Enter the following commands into the CLI
                 </Typography>
@@ -69,14 +69,14 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={2}>
+              <Box>
                 <Typography>
                   Follow the instructions and create a new UNIX user account
                 </Typography>
               </Box>
             </Box>
 
-            <Box mb={5}>
+            <Box>
               <Typography mb={3} variant="h5">
                 Step 3: Setting up Docker Desktop
               </Typography>
@@ -108,7 +108,7 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={2}>
+              <Box>
                 <Typography>
                   Make sure to apply changes and restart
                 </Typography>
@@ -117,7 +117,7 @@ function SetupDocs() {
             </Box>
           </Box>
 
-          <Box mb={10}>
+          <Box>
             <Box mb={5}>
               <Typography variant="h3">
                 WhisperAPI App Setup
@@ -156,7 +156,7 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={2}>
+              <Box>
                 <Typography>
                   Replace &lt;file_path&gt; with the path to the project directory
                 </Typography>
@@ -188,7 +188,7 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={2}>
+              <Box>
                 <Typography>
                   Run the image either via the Docker Desktop GUI or the command
                 </Typography>
@@ -201,7 +201,7 @@ function SetupDocs() {
 
             </Box>
 
-            <Box mb={5}>
+            <Box>
               <Typography mb={3} variant="h5">
                 Running the image with GPU acceleration
               </Typography>
@@ -280,7 +280,7 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={2}>
+              <Box>
                 <Typography>
                   Run the image either via the Docker Desktop GUI or the command
                 </Typography>
