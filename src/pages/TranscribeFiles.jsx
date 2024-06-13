@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Typography, Grid, Divider, Button, TextField, Select, Checkbox, MenuItem, FormControl, useTheme } from '@mui/material'
 import { tokens } from '../themes/MyTheme';
@@ -20,6 +20,14 @@ import Header from '../components/Header';
 function TranscribeFiles() {
     const theme = useTheme();
     const colours = tokens(theme.palette.mode);
+
+    // Device model is running on
+    const [device, setDevice] = useState("null");
+    useEffect(() => {
+        http.get("/get-device").then((res) => {
+            setDevice(res.data.device);
+        });
+    }, []);
 
     // File Selection
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -64,12 +72,35 @@ function TranscribeFiles() {
                 data.num_speakers = 1
             };
 
-            console.log(data)
-            //POST Request
-            console.log("Form submitted:", data);
-            http.post("/transcribe-files", data, selectedFiles).then((res) => {
-                console.log("API response:", res);
+            const formData = new FormData();
+
+            formData.append('model_size', data.model_size);
+            formData.append('diarisation', data.diarisation);
+            formData.append('num_speakers', data.num_speakers);
+
+            // Append files to formData
+            for (let file of selectedFiles) {
+                formData.append('files', file);
+            }
+
+            for (const [key, value] of formData.entries()) {
+                console.log(key, ":", value);
+            }
+
+            console.log(formData);
+
+            // POST Request
+            http.post("/transcribe-files", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             })
+                .then((response) => {
+                    console.log("API Response:", response.data);
+                })
+                .catch((error) => {
+                    console.error("API Error:", error);
+                });
         }
     });
 
@@ -94,7 +125,13 @@ function TranscribeFiles() {
                                 <Typography variant="h6">Device Type:</Typography>
                             </Grid>
                             <Grid item xs={12} md={8} lg={9.5}>
-                                <Typography>cuda</Typography>
+                                <Typography>
+                                    {device ? (
+                                        device
+                                    ) : (
+                                        "- N.A. -"
+                                    )}
+                                </Typography>
                             </Grid>
                         </Grid>
 
