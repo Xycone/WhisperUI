@@ -161,7 +161,7 @@ function SetupDocs() {
                   Replace &lt;file_path&gt; with the path to the project directory
                 </Typography>
                 <Typography>
-                  <code>docker create -t whisper-api-img &lt;file_path&gt;</code>
+                  <code>docker build -t whisper-api-img &lt;file_path&gt;</code>
                 </Typography>
               </Box>
             </Box>
