@@ -74,6 +74,10 @@ function TranscribeFiles() {
 
             const formData = new FormData();
 
+            console.log("model_size:", typeof data.model_size);
+            console.log("diarisation:", typeof data.diarisation);
+            console.log("num_speakers:", typeof data.num_speakers);
+
             formData.append('model_size', data.model_size);
             formData.append('diarisation', data.diarisation);
             formData.append('num_speakers', data.num_speakers);
