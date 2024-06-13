@@ -307,7 +307,11 @@ function TranscribeFiles() {
 
                     <Box>
                         <Typography my={2}>API Response:</Typography>
+
                         <Divider />
+
+                        <Box my={2} p={5} backgroundColor={colours.primary[400]} borderRadius="10px">
+                        </Box>
                     </Box>
                 </Box>
 

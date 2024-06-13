@@ -164,7 +164,7 @@ export const themeSettings = (mode) => {
             MuiOutlinedInput: {
                 styleOverrides: {
                     root: {
-                        borderRadius: 8,
+                        borderRadius: '10px',
                         "&:hover .MuiOutlinedInput-notchedOutline": {
                             borderColor: colours.greenAccent[300],
                         },
@@ -184,7 +184,7 @@ export const themeSettings = (mode) => {
             MuiSelect: {
                 styleOverrides: {
                     root: {
-                        borderRadius: 8,
+                        borderRadius: '10px',
                     }
                 }
             },
@@ -198,7 +198,7 @@ export const themeSettings = (mode) => {
             MuiCheckbox: {
                 styleOverrides: {
                     root: {
-                        borderRadius: 8,
+                        borderRadius: '10px',
                         '&.Mui-checked': {
                             color: colours.greenAccent[300],
                         },
@@ -211,7 +211,7 @@ export const themeSettings = (mode) => {
             MuiButton: {
                 styleOverrides: {
                     root: {
-                        borderRadius: 8,
+                        borderRadius: '10px',
                         textTransform: "none",
                         ...(mode === "dark"
                             ? {
