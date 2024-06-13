@@ -22,7 +22,7 @@ function TranscribeFiles() {
     const colours = tokens(theme.palette.mode);
 
     // Device model is running on
-    const [device, setDevice] = useState("null");
+    const [device, setDevice] = useState(null);
     useEffect(() => {
         http.get("/get-device").then((res) => {
             setDevice(res.data.device);
