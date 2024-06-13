@@ -27,11 +27,11 @@ function SetupDocs() {
               <Typography mb={3} variant="h3">
                 Docker Desktop Setup
               </Typography>
-              <Box mb={2}>
+              <Box mb={3}>
                 <Typography variant="h5">Operating System:</Typography>
                 <Typography>Windows 11 (21H2 or higher)</Typography>
               </Box>
-              <Box mb={2}>
+              <Box mb={3}>
                 <Typography variant="h5">Prerequisites:</Typography>
                 <Typography>Enable hardware virtualisation inside BIOS</Typography>
               </Box>
@@ -42,13 +42,13 @@ function SetupDocs() {
                 Step 1:  Installing Windows Subsystem for Linux (WSL2)
               </Typography>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Run Windows Terminal as administrator
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Enter the following commands into the CLI
                 </Typography>
@@ -63,13 +63,13 @@ function SetupDocs() {
                 Step 2: Setting up Ubuntu WSL distro
               </Typography>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Install Ubuntu from the microsoft store and open it
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Follow the instructions and create a new UNIX user account
                 </Typography>
@@ -81,7 +81,7 @@ function SetupDocs() {
                 Step 3: Setting up Docker Desktop
               </Typography>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Link to download the Docker Desktop Installer:
                 </Typography>
@@ -96,23 +96,24 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Run the installer and open the app after installation is complete
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Select Ubuntu in <span style={{ fontWeight: "bold" }}>"Settings &gt; Resources &gt; WSL Integration"</span>
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Make sure to apply changes and restart
                 </Typography>
               </Box>
+
             </Box>
           </Box>
 
@@ -128,7 +129,7 @@ function SetupDocs() {
                 Creating the Docker image
               </Typography>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Link to clone the Github repository:
                 </Typography>
@@ -143,24 +144,24 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Start the Docker Desktop app
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Open the Windows Terminal
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Replace &lt;file_path&gt; with the path to the project directory
                 </Typography>
                 <Typography>
-                  <code>docker build -t whisper-api &lt;file_path&gt;</code>
+                  <code>docker create -t whisper-api-img &lt;file_path&gt;</code>
                 </Typography>
               </Box>
             </Box>
@@ -170,20 +171,34 @@ function SetupDocs() {
                 Running the image using CPU only
               </Typography>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Open the Windows Terminal
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Run the command in the CLI
                 </Typography>
                 <Typography>
-                  <code>docker run -p 8000:8000 whisper-api</code>
+                  <code>
+                    docker create -p 8000:8000 --name whisper-api-cpu whisper-api-img
+                  </code>
                 </Typography>
               </Box>
+
+              <Box mb={2}>
+                <Typography>
+                  Run the image either via the Docker Desktop GUI or the command
+                </Typography>
+                <Typography>
+                  <code>
+                    docker start whisper-api-cpu
+                  </code>
+                </Typography>
+              </Box>
+
             </Box>
 
             <Box mb={5}>
@@ -191,13 +206,13 @@ function SetupDocs() {
                 Running the image with GPU acceleration
               </Typography>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Open up the Ubuntu app
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Follow instruction to install nvidia container toolkit using Apt
                 </Typography>
@@ -212,7 +227,7 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Verify if installation is successfull
                 </Typography>
@@ -223,7 +238,7 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Configuring Docker to use Nvidia Container Runtime
                 </Typography>
@@ -248,25 +263,36 @@ function SetupDocs() {
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Make sure Docker Desktop is up to date and reboot Windows
                 </Typography>
               </Box>
 
-              <Box mb={1}>
+              <Box mb={2}>
                 <Typography>
                   Open up Ubuntu and run the command in the CLI
                 </Typography>
                 <Typography>
                   <code>
-                    docker run --gpus all -p 8000:8000 whisper-api
+                    docker create --gpus all -p 8000:8000 --name whisper-api-gpu whisper-api-img
                   </code>
                 </Typography>
               </Box>
+
+              <Box mb={2}>
+                <Typography>
+                  Run the image either via the Docker Desktop GUI or the command
+                </Typography>
+                <Typography>
+                  <code>
+                    docker start whisper-api-gpu
+                  </code>
+                </Typography>
+              </Box>
+
             </Box>
           </Box>
-
         </Box>
       </Box>
     </Box>
