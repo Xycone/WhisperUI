@@ -181,13 +181,6 @@ export const themeSettings = (mode) => {
                     }
                 }
             },
-            MuiSelect: {
-                styleOverrides: {
-                    root: {
-                        borderRadius: '10px',
-                    }
-                }
-            },
             MuiMenu: {
                 styleOverrides: {
                     list: {
@@ -198,13 +191,12 @@ export const themeSettings = (mode) => {
             MuiCheckbox: {
                 styleOverrides: {
                     root: {
-                        borderRadius: '10px',
-                        '&.Mui-checked': {
-                            color: colours.greenAccent[300],
+                        "&.Mui-checked": {
+                            color: colours.greenAccent[300]
                         },
-                        '&:hover': {
-                            backgroundColor: colours.primary[400],
-                        },
+                        "&:hover": {
+                            backgroundColor: colours.primary[400]
+                        }
                     }
                 }
             },
