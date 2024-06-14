@@ -61,8 +61,8 @@ function TranscribeFiles() {
                 .required(),
 
             num_speakers: yup.number()
-                .min(1, 'Must be at least 1')
-                .max(10, 'Must be 10 or less')
+                .min(1, "Must be at least 1")
+                .max(10, "Must be 10 or less")
         }),
 
         onSubmit: (data) => {
@@ -74,30 +74,19 @@ function TranscribeFiles() {
 
             const formData = new FormData();
 
-            console.log("model_size:", typeof data.model_size);
-            console.log("diarisation:", typeof data.diarisation);
-            console.log("num_speakers:", typeof data.num_speakers);
-
-            formData.append('model_size', data.model_size);
-            formData.append('diarisation', data.diarisation);
-            formData.append('num_speakers', data.num_speakers);
-
             // Append files to formData
-            for (let file of selectedFiles) {
-                formData.append('files', file);
+            for (const file of selectedFiles) {
+                formData.append("files", file);
             }
-
-            for (const [key, value] of formData.entries()) {
-                console.log(key, ":", value);
-            }
-
-            console.log(formData);
+            console.log("form submitted")
 
             // POST Request
-            http.post("/transcribe-files", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
+            http.post("/transcribe-files", formData,{
+                params: {
+                    model_size: data.model_size,
+                    diarisation: data.diarisation,
+                    num_speakers: data.num_speakers
+                }
             })
                 .then((response) => {
                     console.log("API Response:", response.data);
