@@ -22,16 +22,17 @@ function Topbar() {
             p={5}
         >
             {/* Search Bar */}
-            <Box
+            {/* <Box
                 display="flex"
                 backgroundColor={colours.primary[400]}
-                borderRadius="10px"
+                borderRadius="5px"
             >
                 <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
                 <IconButton type="button" sx={{ p: 1 }}>
                     <SearchIcon />
                 </IconButton>
-            </Box>
+            </Box> */}
+            <Box />
 
             <Box display="flex">
                 <IconButton onClick={colorMode.toggleColourMode}>

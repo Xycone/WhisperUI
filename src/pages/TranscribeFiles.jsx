@@ -29,18 +29,31 @@ function TranscribeFiles() {
         });
     }, []);
 
-    // File Selection
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const handleFileSelect = (event) => {
-        const files = Array.from(event.target.files);
-        setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+    // Multiple File Selection
+    // const [selectedFiles, setSelectedFiles] = useState([]);
 
-        event.target.value = null;
-    };
+    // const handleFileSelect = (event) => {
+    //     const files = Array.from(event.target.files);
+    //     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+
+    //     event.target.value = null;
+    // };
+
+    // Single File Selection
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
+    const handleFileSelect = (event) => {
+        const file = event.target.files;
+        setSelectedFiles(file);
+    }
 
     const handleFileRemove = (index) => {
         setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
+
+    // JSON Response
+    const [response, setResponse] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     // Form
     const formik = useFormik({
@@ -80,19 +93,25 @@ function TranscribeFiles() {
             }
             console.log("form submitted")
 
+            setLoading(true);
+
             // POST Request
-            http.post("/transcribe-files", formData,{
+            http.post("/transcribe-files", formData, {
                 params: {
                     model_size: data.model_size,
                     diarisation: data.diarisation,
                     num_speakers: data.num_speakers
                 }
             })
-                .then((response) => {
-                    console.log("API Response:", response.data);
+                .then((res) => {
+                    console.log("API Response:", res.data);
+                    setResponse(res.data);
+                    setLoading(false);
                 })
                 .catch((error) => {
                     console.error("API Error:", error);
+                    setResponse(error);
+                    setLoading(false);
                 });
         }
     });
@@ -163,7 +182,7 @@ function TranscribeFiles() {
                                 </Box>
                             </Grid>
                             <Grid item xs={12} md={8} lg={9.5}>
-                                <Box>
+                                {/* <Box>
                                     <Button
                                         variant="contained"
                                         component="label"
@@ -178,6 +197,17 @@ function TranscribeFiles() {
                                             style={{ display: 'none' }}
                                         />
                                     </Button>
+                                </Box> */}
+                                <Box
+                                    display="flex"
+                                    alignItems="center"
+                                    height="100%"
+                                >
+                                    <TextField
+                                        type="file"
+                                        size="small"
+                                        onChange={handleFileSelect}
+                                    />
                                 </Box>
                             </Grid>
                         </Grid>
@@ -299,13 +329,37 @@ function TranscribeFiles() {
                     </Box>
 
                     <Box>
-                        <Typography my={2}>API Response:</Typography>
+                        <Typography my={2}>Response Body:</Typography>
 
                         <Divider />
 
-                        <Box my={2} p={5} backgroundColor={colours.primary[400]} borderRadius="10px">
+                        <Box
+                            my={2}
+                            p={5}
+                            backgroundColor={colours.primary[400]}
+                            borderRadius="5px"
+                            minHeight="60vh"
+                            maxHeight="60vh"
+                            style={{ overflow: "auto" }}
+                        >
+                            {loading && (
+                                <Typography>
+                                    Loading...
+                                </Typography>
+                            )}
+
+                            {response instanceof Error ? (
+                                <Typography>
+                                    Error: {response.request.statusText}
+                                </Typography>
+                            ) : (
+                                <Typography component="pre">
+                                    {JSON.stringify(response, null, 2)}
+                                </Typography>
+                            )}
                         </Box>
                     </Box>
+
                 </Box>
 
             </Box>
