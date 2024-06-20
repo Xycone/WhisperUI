@@ -52,7 +52,7 @@ function TranscribeFiles() {
     };
 
     // JSON Response
-    const [response, setResponse] = useState(null);
+    const [response, setResponse] = useState();
     const [loading, setLoading] = useState(false);
 
     // Form
@@ -110,7 +110,7 @@ function TranscribeFiles() {
                 })
                 .catch((error) => {
                     console.error("API Error:", error);
-                    setResponse(error);
+                    setResponse(error.response);
                     setLoading(false);
                 });
         }
@@ -350,7 +350,7 @@ function TranscribeFiles() {
 
                             {response instanceof Error ? (
                                 <Typography>
-                                    Error: {response.request.statusText}
+                                    {response.message}
                                 </Typography>
                             ) : (
                                 <Typography component="pre">
