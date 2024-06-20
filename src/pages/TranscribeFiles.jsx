@@ -60,7 +60,7 @@ function TranscribeFiles() {
         // Default Form Values
         initialValues: {
             model_size: "base",
-            diarisation: false,
+            diarisation: true,
             num_speakers: 1
         },
 
@@ -267,7 +267,7 @@ function TranscribeFiles() {
                                 <FormControl error={formik.touched.diarisation && Boolean(formik.errors.diarisation)}>
                                     <Checkbox
                                         name="diarisation"
-                                        value={formik.values.diarisation}
+                                        checked={formik.values.diarisation}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                     />
