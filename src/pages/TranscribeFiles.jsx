@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
-import { Box, Typography, Grid, Divider, Button, TextField, Select, Checkbox, MenuItem, FormControl, useTheme } from '@mui/material'
+import {
+    Box,
+    Typography,
+    Grid,
+    Divider,
+    Button,
+    TextField,
+    Select,
+    Checkbox,
+    MenuItem,
+    FormControl,
+    useTheme
+} from '@mui/material'
+
 import { tokens } from '../themes/MyTheme';
 
 // Used for backend API call
 import http from '../http';
-
-// MUI Icons
-import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 // Form & Form Validation
 import * as yup from 'yup';
@@ -29,39 +38,29 @@ function TranscribeFiles() {
         });
     }, []);
 
-    // Multiple File Selection
-    // const [selectedFiles, setSelectedFiles] = useState([]);
+    // File Selection
+    const [dialogOpen, setDialogOpen] = useState(false);
 
-    // const handleFileSelect = (event) => {
-    //     const files = Array.from(event.target.files);
-    //     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
-
-    //     event.target.value = null;
-    // };
-
-    // Single File Selection
-    const [selectedFiles, setSelectedFiles] = useState([]);
-
-    const handleFileSelect = (event) => {
-        const file = event.target.files;
-        setSelectedFiles(file);
-    }
-
-    const handleFileRemove = (index) => {
-        setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    const handleDialogOpen = () => {
+        setDialogOpen(true)
+        console.log("Dialog Open")
     };
 
-    // JSON Response
+    const handleDialogClose = () => {
+        setDialogOpen(false)
+        console.log("Dialog Close")
+    };
+
+    // Form
     const [response, setResponse] = useState();
     const [loading, setLoading] = useState(false);
 
-    // Form
     const formik = useFormik({
         // Default Form Values
         initialValues: {
             model_size: "base",
             diarisation: true,
-            num_speakers: 1
+            num_speakers: 2
         },
 
         // Validation Schema
@@ -80,10 +79,6 @@ function TranscribeFiles() {
 
         onSubmit: (data) => {
             data.model_size = data.model_size.trim();
-
-            if (!data.diarisation) {
-                data.num_speakers = 1
-            };
 
             const formData = new FormData();
 
@@ -132,6 +127,7 @@ function TranscribeFiles() {
                     m={4}
                 >
                     <Box mb={10}>
+                        {/* General Information */}
                         <Grid container my={2}>
                             <Grid item xs={12} md={4} lg={2.5}>
                                 <Typography variant="h6">Device Type:</Typography>
@@ -171,6 +167,8 @@ function TranscribeFiles() {
 
                         <Divider />
 
+
+                        {/* Select Files */}
                         <Grid container my={2}>
                             <Grid item xs={12} md={4} lg={2.5}>
                                 <Box
@@ -182,38 +180,26 @@ function TranscribeFiles() {
                                 </Box>
                             </Grid>
                             <Grid item xs={12} md={8} lg={9.5}>
-                                {/* <Box>
-                                    <Button
-                                        variant="contained"
-                                        component="label"
-                                        startIcon={<DriveFolderUploadOutlinedIcon />}
-                                        size="large"
+                                <Box>
+                                    <Typography
+                                        onClick={handleDialogOpen}
+                                        sx={{
+                                            textDecoration: "underline",
+                                            "&:hover": {
+                                                color: colours.greenAccent[300],
+                                            }
+                                        }}
                                     >
-                                        <Typography>Select Files</Typography>
-                                        <input
-                                            type="file"
-                                            multiple
-                                            onChange={handleFileSelect}
-                                            style={{ display: 'none' }}
-                                        />
-                                    </Button>
-                                </Box> */}
-                                <Box
-                                    display="flex"
-                                    alignItems="center"
-                                    height="100%"
-                                >
-                                    <TextField
-                                        type="file"
-                                        size="small"
-                                        onChange={handleFileSelect}
-                                    />
+                                        Select File
+                                    </Typography>
                                 </Box>
                             </Grid>
                         </Grid>
 
                         <Divider />
 
+
+                        {/* ASR Model Size */}
                         <Grid container my={2}>
                             <Grid item xs={12} md={4} lg={2.5}>
                                 <Box
@@ -252,6 +238,8 @@ function TranscribeFiles() {
 
                         <Divider />
 
+
+                        {/* Speaker Diarisation & Num Speakers */}
                         <Grid container my={2}>
                             <Grid item xs={12} md={4} lg={2.5}>
                                 <Box
@@ -328,6 +316,8 @@ function TranscribeFiles() {
                         </Box>
                     </Box>
 
+
+                    {/* JSON Response */}
                     <Box>
                         <Typography my={2}>Response Body:</Typography>
 
@@ -359,11 +349,9 @@ function TranscribeFiles() {
                             )}
                         </Box>
                     </Box>
-
                 </Box>
-
             </Box>
-        </Box>
+        </Box >
     )
 }
 
