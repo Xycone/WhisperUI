@@ -164,7 +164,7 @@ export const themeSettings = (mode) => {
             MuiOutlinedInput: {
                 styleOverrides: {
                     root: {
-                        borderRadius: '5px',
+                        borderRadius: "5px",
                         "&:hover .MuiOutlinedInput-notchedOutline": {
                             borderColor: colours.greenAccent[300],
                         },
@@ -203,7 +203,7 @@ export const themeSettings = (mode) => {
             MuiButton: {
                 styleOverrides: {
                     root: {
-                        borderRadius: '5px',
+                        borderRadius: "5px",
                         textTransform: "none",
                         ...(mode === "dark"
                             ? {
@@ -220,6 +220,20 @@ export const themeSettings = (mode) => {
                                     backgroundColor: colours.greenAccent[200],
                                     color: "#FCFCFC"
                                 }
+                            }
+                        )
+                    }
+                }
+            },
+            MuiDialog: {
+                styleOverrides: {
+                    paper: {
+                        borderRadius: "5px",
+                        ...(mode === "dark"
+                            ? {
+                                backgroundColor: colours.primary[500]
+                            } : {
+                                backgroundColor: "#FCFCFC"
                             }
                         )
                     }

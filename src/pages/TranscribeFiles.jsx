@@ -11,10 +11,19 @@ import {
     Checkbox,
     MenuItem,
     FormControl,
-    useTheme
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    useTheme,
+    DialogContentText,
+    IconButton
 } from '@mui/material'
 
 import { tokens } from '../themes/MyTheme';
+
+// MUI Icons
+import CloseIcon from '@mui/icons-material/Close';
 
 // Used for backend API call
 import http from '../http';
@@ -40,6 +49,7 @@ function TranscribeFiles() {
 
     // File Selection
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedFiles, setSelectedFiles] = useState([]);
 
     const handleDialogOpen = () => {
         setDialogOpen(true)
@@ -49,6 +59,21 @@ function TranscribeFiles() {
     const handleDialogClose = () => {
         setDialogOpen(false)
         console.log("Dialog Close")
+    };
+
+    const handleFileSelect = (event) => {
+        const files = Array.from(event.target.files);
+        setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+    };
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const files = Array.from(event.dataTransfer.files);
+        setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+    };
+
+    const handleDragOver = (event) => {
+        event.preventDefault();
     };
 
     // Form
@@ -130,7 +155,13 @@ function TranscribeFiles() {
                         {/* General Information */}
                         <Grid container my={2}>
                             <Grid item xs={12} md={4} lg={2.5}>
-                                <Typography variant="h6">Device Type:</Typography>
+                                <Box
+                                    display="flex"
+                                    alignItems="center"
+                                    height="100%"
+                                >
+                                    <Typography variant="h6">Device Type:</Typography>
+                                </Box>
                             </Grid>
                             <Grid item xs={12} md={8} lg={9.5}>
                                 <Typography>
@@ -147,7 +178,13 @@ function TranscribeFiles() {
 
                         <Grid container my={2}>
                             <Grid item xs={12} md={4} lg={2.5}>
-                                <Typography variant="h6">File Format:</Typography>
+                                <Box
+                                    display="flex"
+                                    alignItems="center"
+                                    height="100%"
+                                >
+                                    <Typography variant="h6">File Format:</Typography>
+                                </Box>
                             </Grid>
                             <Grid item xs={12} md={8} lg={9.5}>
                                 <Typography>mp3, mp4, mpeg, mpga, m4a, wav, webm</Typography>
@@ -158,7 +195,13 @@ function TranscribeFiles() {
 
                         <Grid container my={2}>
                             <Grid item xs={12} md={4} lg={2.5}>
-                                <Typography>File Size Limit (MB):</Typography>
+                                <Box
+                                    display="flex"
+                                    alignItems="center"
+                                    height="100%"
+                                >
+                                    <Typography>File Size Limit (MB):</Typography>
+                                </Box>
                             </Grid>
                             <Grid item xs={12} md={8} lg={9.5}>
                                 <Typography>25</Typography>
@@ -182,15 +225,18 @@ function TranscribeFiles() {
                             <Grid item xs={12} md={8} lg={9.5}>
                                 <Box>
                                     <Typography
+                                        display="inline"
                                         onClick={handleDialogOpen}
                                         sx={{
                                             textDecoration: "underline",
+                                            cursor: "pointer",
                                             "&:hover": {
                                                 color: colours.greenAccent[300],
                                             }
                                         }}
+
                                     >
-                                        Select File
+                                        Upload Files
                                     </Typography>
                                 </Box>
                             </Grid>
@@ -351,6 +397,76 @@ function TranscribeFiles() {
                     </Box>
                 </Box>
             </Box>
+
+
+            {/* File Select Dialog */}
+            <Dialog
+                open={dialogOpen}
+                onClose={handleDialogClose}
+                fullWidth
+                maxWidth="sm"
+            >
+                <DialogContent>
+                    <Box p={1}>
+                        <Box
+                            mb={2}
+                            display="flex"
+                            alignItems="start"
+                            justifyContent="space-between"
+                        >
+                            <Box>
+                                <Typography variant="h5">
+                                    Upload Files
+                                </Typography>
+                                <DialogContentText>
+                                    <Typography>
+                                        Upload & Attach Audio Files To The API Request.
+                                    </Typography>
+                                </DialogContentText>
+                            </Box>
+
+                            <IconButton onClick={handleDialogClose}>
+                                <CloseIcon />
+                            </IconButton>
+                        </Box>
+
+                        <Typography>{selectedFiles.length} file(s) selected</Typography>
+
+                        <Box
+                            p={5}
+                            minWidth="fit-content"
+                            border="2px dashed"
+                            borderRadius="5px"
+                            textAlign="center"
+                            onDrop={handleDrop}
+                            onDragOver={handleDragOver}
+                            style={{
+                                backgroundColor: "inherit",
+                                background: "repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 20px, rgba(255, 255, 255, 0.05) 20px, rgba(255, 255, 255, 0.05) 40px)"
+                            }}
+                        >
+                            <Typography mb={1}>
+                                Drag & Drop Files
+                            </Typography>
+                            <Typography mb={1}>
+                                or
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                component="label"
+                            >
+                                <Typography>Browse</Typography>
+                                <input
+                                    type="file"
+                                    style={{ display: 'none' }}
+                                    multiple
+                                    onChange={handleFileSelect}
+                                />
+                            </Button>
+                        </Box>
+                    </Box>
+                </DialogContent>
+            </Dialog>
         </Box >
     )
 }
