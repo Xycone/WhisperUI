@@ -365,7 +365,7 @@ function TranscribeFiles() {
 
                     {/* JSON Response */}
                     <Box>
-                        <Typography my={2}>Response Body:</Typography>
+                        <Typography my={2}>API Response:</Typography>
 
                         <Divider />
 
